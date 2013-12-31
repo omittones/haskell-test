@@ -1,3 +1,8 @@
 module Main where
 
-main = putStr "entered main method\n"
+add a b = a + b
+
+main = do
+    print "entered main method"
+    print $ add 5 6
+    print "exited main method"
