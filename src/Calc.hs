@@ -13,4 +13,7 @@ evaluate :: Expression -> Double
 evaluate = undefined
 
 main :: IO ()
-main = putStrLn "It works, so are we done yet?"
+main = do
+    line <- getLine
+    putStrLn line
+    main
