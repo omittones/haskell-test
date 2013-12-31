@@ -9,7 +9,7 @@ askUser question = do
 
 printStuff = do
     print "entered main method"
-    print $ add (askUser "first number") (askUser "secondNumber")
+    --print $ add (askUser "first number") (askUser "secondNumber")
     print "exited main method"
 
 main = do
