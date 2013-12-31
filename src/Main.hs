@@ -2,7 +2,15 @@ module Main where
 
 add a b = a + b
 
-main = do
+askUser question = do
+    print question
+    output <- getLine
+    return output
+
+printStuff = do
     print "entered main method"
-    print $ add 5 6
+    print $ add (askUser "first number") (askUser "secondNumber")
     print "exited main method"
+
+main = do
+    printStuff
