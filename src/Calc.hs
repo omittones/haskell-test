@@ -7,6 +7,7 @@ opToChar Minus = '-'
 opToChar Div = '/'
 opToChar Times = '*'
 
+--constructors taking in argument of another type
 data Token = TokOp Operator | TokIdent String | TokNum Integer deriving (Show, Eq)
 
 showContent :: Token -> String
@@ -27,6 +28,9 @@ evaluate = undefined
 
 main :: IO ()
 main = do
+
+    putStrLn $ showContent $ TokNum 5
+
     line <- getLine
     putStrLn line
     if length line /= 0 then
