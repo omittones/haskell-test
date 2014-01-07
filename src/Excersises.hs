@@ -15,9 +15,20 @@ zipList :: ([a],[b]) -> [(a,b)]
 zipList ([],_) = []
 zipList (_,[]) = []
 zipList (l1:rest1,l2:rest2) = (l1,l2):zipList (rest1,rest2)
+--instead of [],_ and _,[] definition we can use _,_ after the full definition, to catch every non matched call
+--remember pattern matching
+
+tokenize :: String -> [Bool]
+tokenize (f:rest) = do
+    let is = if f == 'a' then True else False
+    is:tokenize rest
+tokenize _ = []
+
 
 main :: IO ()
 main = do
+
+    print $ tokenize "abcaa"
 
     print $ zipList ([1, 2, 3, 4], "Hello")
 
