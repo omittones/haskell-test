@@ -24,18 +24,18 @@ showContent (TokNum i) = show i
 
 data Expression
 
-tokenize :: String -> [Token]
-tokenize [] = []
-tokenize (c : cs)
-    | elem c "+-*/" = TokOp (operator c) : tokenize cs
+filterSpace :: String -> String
+filterSpace = filter (\c -> c/=' ')
+
+tokenizeChar :: Char -> Token
+tokenizeChar c
+    | elem c "+-*/" = TokOp (operator c)
+    | isDigit c  = TokNum (digitToInt c)
+    | isAlpha c  = TokIdent [c]
     | otherwise = error $ "Cannot tokenize " ++ [c]
-    | isDigit c  = TokNum (digitToInt c) : tokenize cs
-    | isAlpha c  = TokIdent [c]          : tokenize cs
 
-
-
-
-
+tokenize :: String -> [Token]
+tokenize = map tokenizeChar
 
 
 parse :: [Token] -> Expression

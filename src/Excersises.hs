@@ -1,4 +1,5 @@
 module Excersises where
+import Data.Char
 
 norm :: [Double] -> Double
 norm [] = 0
@@ -37,6 +38,17 @@ cat _ b = b
 --currying
 pig :: String -> String
 pig = cat "pig"
+
+toInts :: String -> [Int]
+toInts (a:rest) = digitToInt a : toInts rest
+toInts [] = []
+
+--currying with map
+altToInts = map digitToInt
+
+squares :: [Int] -> [Int]
+squares = map (\t -> t*t)
+
 
 
 main :: IO ()
