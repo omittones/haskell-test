@@ -24,9 +24,27 @@ tokenize (f:rest) = do
     is:tokenize rest
 tokenize _ = []
 
+--currying
+sum :: Int -> Int -> Int
+sum a b = a + b
+sum2 = Excersises.sum 2
+
+--concatenate two lists
+cat :: [a] -> [a] -> [a]
+cat (a:at) b = a : cat at b
+cat _ b = b
+
+--currying
+pig :: String -> String
+pig = cat "pig"
+
 
 main :: IO ()
 main = do
+
+    print $ cat [1,2] [3,4]
+    print $ cat [1] [3,4]
+    print $ cat [] [3,4]
 
     print $ tokenize "abcaa"
 
