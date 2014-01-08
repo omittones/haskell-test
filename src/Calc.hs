@@ -27,16 +27,24 @@ data Expression
 filterSpace :: String -> String
 filterSpace = filter (\c -> c/=' ')
 
-tokenizeChar :: Char -> Token
-tokenizeChar c
-    | elem c "+-*/" = TokOp (operator c)
-    | isDigit c  = TokNum (digitToInt c)
-    | isAlpha c  = TokIdent [c]
-    | otherwise = error $ "Cannot tokenize " ++ [c]
-
 tokenize :: String -> [Token]
-tokenize = map tokenizeChar
+tokenize (c:rest)
+    | elem c "+-*/" = TokOp (operator c) : tokenize rest
+    | isDigit c  = TokNum (digitToInt c) : tokenize rest
+    | isAlpha c  = identifier c rest
+    | otherwise = error $ "Cannot tokenize " ++ [c]
+tokenize [] = []
 
+alnums :: String -> (String, String)
+alnums arg = als "" arg where
+   als acc [] = (acc,[])
+   als acc (c:cs)
+     | isAlpha c = let (acc',cs') = als acc cs in (c:acc',cs')
+     | otherwise = (acc, c:cs)
+
+identifier :: Char -> String -> [Token]
+identifier c cs = let (str, cs') = alnums cs in
+                  TokIdent (c:str) : tokenize cs'
 
 parse :: [Token] -> Expression
 parse = undefined
@@ -45,13 +53,4 @@ evaluate :: Expression -> Double
 evaluate = undefined
 
 main :: IO ()
-main = do
-
-    putStrLn $ showContent $ TokNum 5
-
-    line <- getLine
-    putStrLn line
-    if length line /= 0 then
-        main
-    else
-        return ()
+main = print $ alnums "robust123+1223greate222"

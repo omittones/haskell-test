@@ -49,8 +49,6 @@ altToInts = map digitToInt
 squares :: [Int] -> [Int]
 squares = map (\t -> t*t)
 
-
-
 main :: IO ()
 main = do
 
