@@ -49,8 +49,33 @@ altToInts = map digitToInt
 squares :: [Int] -> [Int]
 squares = map (\t -> t*t)
 
+--foldl and foldr
+
+
+myhead :: [a] -> a
+myhead [] = undefined
+myhead (h:rest) = h
+
+
+
 main :: IO ()
 main = do
+
+    --list comprehension, for every x in [1..4] where x is not 4 and y in [1..4] where y is not 3
+    print $ [(x,y) | x <- [1..4], x /= 4, y <- [1..4], y /= 3]
+
+    --use list comprehension for calculating length
+    print $ Prelude.sum [1 | _ <- [1,2,4]]
+
+    --index operator
+    print $ [1,2,4] !! 0
+    return ()
+
+
+main_10 = do
+
+    print $ foldr (\value acc -> acc++[value]) "" ['a','b','c']
+    print $ foldl (\acc value -> acc++[value]) "" ['a','b','c']
 
     print $ cat [1,2] [3,4]
     print $ cat [1] [3,4]
