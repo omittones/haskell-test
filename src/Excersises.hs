@@ -56,10 +56,22 @@ myhead :: [a] -> a
 myhead [] = undefined
 myhead (h:rest) = h
 
+-- to use + operator on a type we have to specify that a conforms to Num typeclass
+addall :: (Num a) => [a] -> a
+addall whole@(f:rest) = f + addall rest --we can access the whole list using whole
+addall [] = 0
 
+-- or Read and Num typeclass
+addstring :: (Read a, Num a) => a -> String -> a
+addstring arg text = do
+    let parsed = read text
+    arg + parsed
 
 main :: IO ()
 main = do
+
+    --read convert String to something, :: Double specifies the desired return type (compiler can't infer so we have to be explicit)
+    print $ (read "5.6" :: Double) * 2
 
     --list comprehension, for every x in [1..4] where x is not 4 and y in [1..4] where y is not 3
     print $ [(x,y) | x <- [1..4], x /= 4, y <- [1..4], y /= 3]
