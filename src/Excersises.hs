@@ -78,12 +78,27 @@ qs (hd:tl) = let before = qs [t | t <- tl, t <= hd]
                  after = qs [t | t <- tl, t > hd]
                  in before ++ [hd] ++ after
 
+-- more concise quick sort using filter function and curried <= and > operator
+-- operators are also function, only infix
+qs2 :: (Ord a) => [a] -> [a]
+qs2 [] = []
+qs2 (hd:tl) = qs2 (filter (<hd) tl) ++ [hd] ++ qs2 (filter (>=hd) tl)
+
 main :: IO ()
 main = do
 
-    print $ qs [5,32,5,43,1,1,3,33,6,1]
+    print $ qs [2,5,5,4,2,1,1,4]
 
+    print $ qs2 [2,5,5,4,2,1,1,4]
+
+    --show all numbers less than 4, < is also a function
+    print $ filter (<5) [1,2,3,4,5]
+
+    --will not cause block, because lazy eval
     print $ take 5 (repeat' 3)
+
+    --we have to specify the return type explicitly because print needs it to know what to do
+    print $ (qs [] :: [Int])
 
     --read convert String to something, :: Double specifies the desired return type (compiler can't infer so we have to be explicit)
     print $ (read "5.6" :: Double) * 2
