@@ -49,13 +49,6 @@ altToInts = map digitToInt
 squares :: [Int] -> [Int]
 squares = map (\t -> t*t)
 
---foldl and foldr
-
-
-myhead :: [a] -> a
-myhead [] = undefined
-myhead (h:rest) = h
-
 -- to use + operator on a type we have to specify that a conforms to Num typeclass
 addall :: (Num a) => [a] -> a
 addall whole@(f:rest) = f + addall rest --we can access the whole list using whole
@@ -67,8 +60,30 @@ addstring arg text = do
     let parsed = read text
     arg + parsed
 
+-- guard clauses, pattern match with condition
+mysig :: (Num a, Ord a) => a -> Int
+mysig a
+ | a > 0 = 1
+ | a < 0 = -1
+ | a == 0 = 0
+
+-- infinite list that cycles 'a' infinite times
+-- the expression is lazy so we can write take 5 (repeat' 3) to get [3,3,3,3,3], and it won't block
+repeat' a = a : repeat' a
+
+-- quicksort using list comprehension
+qs :: (Ord a) => [a] -> [a]
+qs [] = []
+qs (hd:tl) = let before = qs [t | t <- tl, t <= hd]
+                 after = qs [t | t <- tl, t > hd]
+                 in before ++ [hd] ++ after
+
 main :: IO ()
 main = do
+
+    print $ qs [5,32,5,43,1,1,3,33,6,1]
+
+    print $ take 5 (repeat' 3)
 
     --read convert String to something, :: Double specifies the desired return type (compiler can't infer so we have to be explicit)
     print $ (read "5.6" :: Double) * 2
