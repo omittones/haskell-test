@@ -87,9 +87,27 @@ qs2 (hd:tl) = qs2 (filter (<hd) tl) ++ [hd] ++ qs2 (filter (>=hd) tl)
 main :: IO ()
 main = do
 
+    --prints when does sum of square roots of numbers [1..] exceed 1000
+    print $ length $ takeWhile (<1000) $ scanl1 (+) $ map sqrt [1..]
+
+    --function composition using .
+    --whitespace before in is needed because Haskell
+    let sqrt3 = sqrt . sqrt
+     in print $ sqrt3 16
+
+    --reverse list using foldl
+    print $ foldl (\acc item -> item:acc) [] [1,2,3,4,5]
+
+    --flip arguments of map, and apply curried lambda function (which adds 1) to a list
+    print $ flip map [1,2,3,4,5] ((\x y -> x + y) 1)
+
     print $ qs [2,5,5,4,2,1,1,4]
 
     print $ qs2 [2,5,5,4,2,1,1,4]
+
+    return ()
+
+main_11 = do
 
     --show all numbers less than 4, < is also a function
     print $ filter (<5) [1,2,3,4,5]
