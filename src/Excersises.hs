@@ -1,5 +1,7 @@
 module Excersises where
+
 import Data.Char
+import Data.List
 
 norm :: [Double] -> Double
 norm [] = 0
@@ -84,8 +86,31 @@ qs2 :: (Ord a) => [a] -> [a]
 qs2 [] = []
 qs2 (hd:tl) = qs2 (filter (<hd) tl) ++ [hd] ++ qs2 (filter (>=hd) tl)
 
+--function that can return nothing
+findIndex' :: (Eq a) => a -> [a] -> Maybe Int
+findIndex' _ [] = Nothing
+findIndex' element (hd:tl) = inner 0 element (hd:tl)
+                            where
+                            inner _ _ [] = Nothing
+                            inner i e (hd:tl) = if e == hd then Just i
+                                                else inner (i+1) e tl
+
 main :: IO ()
 main = do
+
+    --find index using our function
+    print $ findIndex' 3 [1,2,3,4]
+    print $ findIndex' 3 [1,2,3]
+    print $ findIndex' 3 []
+    print $ findIndex' 4 [1,2,3]
+
+    --nub is defined in Data.List, and filters out duplicates
+    let numUniques = length . nub
+     in print $ numUniques [1,2,3,3,4]
+
+    return ()
+
+main_12 = do
 
     --prints when does sum of square roots of numbers [1..] exceed 1000
     print $ length $ takeWhile (<1000) $ scanl1 (+) $ map sqrt [1..]
