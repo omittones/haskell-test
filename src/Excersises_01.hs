@@ -1,4 +1,4 @@
-module Excersises where
+module Excersises_01 where
 
 import Data.Char
 import Data.List
@@ -30,7 +30,7 @@ tokenize _ = []
 --currying
 sum :: Int -> Int -> Int
 sum a b = a + b
-sum2 = Excersises.sum 2
+sum2 = Excersises_01.sum 2
 
 --concatenate two lists
 cat :: [a] -> [a] -> [a]
@@ -95,8 +95,28 @@ findIndex' element (hd:tl) = inner 0 element (hd:tl)
                             inner i e (hd:tl) = if e == hd then Just i
                                                 else inner (i+1) e tl
 
+--define shape datatype
+--constructor Point is actually a function Float -> Float -> Shape, we use it like that (Point 0 0)
+data Shape = Empty | Point Float Float | Circle Float Float Float | Rectangle Float Float Float Float deriving (Show)
+
+--define function taking in our Shape
+surface :: Shape -> Float
+surface Empty = 0
+surface (Point _ _) = 0
+surface (Circle _ _ r) = r * r * pi
+surface (Rectangle _ _ w h) = w * h
+
 main :: IO ()
 main = do
+
+    --we can do this because of 'deriving (Show)' otherwise we can't
+    print $ Rectangle 0 0 5 10
+
+    --invoke function with constructed shape
+    print $ surface $ Circle 0 0 1
+    return ()
+
+main_13 = do
 
     --find index using our function
     print $ findIndex' 3 [1,2,3,4]
