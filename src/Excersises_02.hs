@@ -99,8 +99,8 @@ findAndPrintValue key map = let res = Map.lookup key map in
                                 Just b -> print b
 
 
-main :: IO()
-main = do
+main_30 :: IO()
+main_30 = do
 
     let b = (3,4)
     printPair b
@@ -111,8 +111,42 @@ main = do
     findAndPrintValue 1 mapping
     findAndPrintValue 5 mapping
 
+    return ()
+
+
+--definition of our own typeclass
+class XMLSerializable arg where
+    serializeToXML :: arg -> String
+    deserializeFromXML :: String -> arg
+
+--implement Person type as instance of XMLSerializable typeclass
+instance XMLSerializable Person where
+    serializeToXML a = let name = "<name>" ++ (firstName a) ++ " " ++ (lastName a) ++ "</name>"
+                           persontype = case a of
+                                    Male _ _ -> "<type>Male</type>"
+                                    Female _ _ -> "<type>Female</type>"
+                        in "<person>" ++ name ++ persontype ++ "</person>"
+    deserializeFromXML xml = Male "fake" "fake"
+
+--implement serialization for a pair of values, each of which must be itself serializable
+--we use typeclass constraint (XML.. a, XML.. b) =>
+instance (XMLSerializable a, XMLSerializable b) => XMLSerializable (a,b) where
+    serializeToXML (arg1,arg2) = (serializeToXML arg1) ++ (serializeToXML arg2)
+    deserializeFromXML xml = ((deserializeFromXML xml) , (deserializeFromXML xml))
+
+main :: IO()
+main = do
+
+    print $ serializeToXML $ Male "tino" "juricic"
+    print $ serializeToXML ((deserializeFromXML "lalalal") :: Person)
 
     return ()
+
+
+
+
+
+
 
 
 
