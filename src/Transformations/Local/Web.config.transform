@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform" xdt:Transform="Replace">
+  <connectionStrings>
+  </connectionStrings>
+  <system.web>
+    <compilation/>
+    <!-- LOCAL CONFIG -->
+  </system.web>
+</configuration>

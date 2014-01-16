@@ -1,0 +1,20 @@
+﻿<connectionStrings>
+  <add name="NeoGovISConnectionString" connectionString="Data Source=.; Initial Catalog=gj_mainsite1; Integrated Security=True"/>
+  <add name="NeoGovISConnectionString_ReadOnly" connectionString="Data Source=.; Initial Catalog=gj_mainsite1; Integrated Security=True"/>
+  <add name="NeoGovAuditConnectionString" connectionString="Data Source=db-02;Initial Catalog=gj_AuditDB;User ID=ngv_dev;Password=8lue!birD;" providerName="System.Data.SqlClient" />
+</connectionStrings>
+
+<!--dev-->
+<!--<connectionStrings>
+  <add name="NeoGovISConnectionString" connectionString="Data Source=db-01;Initial Catalog=gj_mainsite1;User ID=ngv_dev;Password=8lue!birD;" providerName="System.Data.SqlClient"/>
+  <add name="NeoGovISConnectionString_ReadOnly" connectionString="Data Source=db-01;Initial Catalog=gj_mainsite1;User ID=ngv_dev;Password=8lue!birD;" providerName="System.Data.SqlClient"/>
+  <add name="CustomObjectsConnectionString" connectionString="Data Source=db-01;Initial Catalog=CustomObjects;User ID=webuser;Password=40lov3r!;" providerName="System.Data.SqlClient"/>
+  <add name="NeoGovAuditConnectionString" connectionString="Data Source=db-02;Initial Catalog=gj_AuditDB;User ID=ngv_dev;Password=8lue!birD;" providerName="System.Data.SqlClient" />
+</connectionStrings>-->
+
+<!--qa-->
+<!--<connectionStrings>
+  <add name="NeoGovISConnectionString" connectionString="Data Source=qa-oltpdb01;Initial Catalog=gj_mainsite1;Password=4ol0v3r&amp;;user id=webuser;" providerName="System.Data.SqlClient" />
+  <add name="NeoGovAuditConnectionString" connectionString="Data Source=qa-oltpdb01;Initial Catalog=gj_AuditDB;Password=4ol0v3r&amp;;user id=webuser;" providerName="System.Data.SqlClient" />
+  <add name="NeoGovISConnectionString_ReadOnly" connectionString="Data Source=qa-oltpdb01;Initial Catalog=gj_mainsite1;Password=4ol0v3r&amp;;user id=webuser;" providerName="System.Data.SqlClient" />
+</connectionStrings>-->

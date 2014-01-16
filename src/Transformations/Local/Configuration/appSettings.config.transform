@@ -1,0 +1,5 @@
+﻿<?xml version="1.0"?>
+<appSettings xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+	<add key="ClientValidationEnabled" value="false" xdt:Transform="Replace" xdt:Locator="Match(key)" />
+	<add key="ConfigurationTest" value="somethingElse" xdt:Transform="Replace" xdt:Locator="Match(key)" />
+</appSettings>

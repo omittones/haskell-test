@@ -1,0 +1,118 @@
+﻿<appSettings>
+  <add key="webpages:Version" value="2.0.0.0"/>
+  <add key="webpages:Enabled" value="false"/>
+  <add key="PreserveLoginUrl" value="true"/>
+  <add key="ClientValidationEnabled" value="true"/>
+  <add key="UnobtrusiveJavaScriptEnabled" value="true"/>
+  <!--Logging file location-->
+  <add key="LoggingConfigFile" value="Logging/Logging.config"/>
+  <add key="ApplicantSearchSolrUrl" value="http://localhost:8983/solr/applicantsearch"/>
+  <!-- How many ms to wait when Solr is not responding. -->
+  <add key="SolrQueryRetryInterlvalMs" value="400"/>
+  <!-- The DaysPosted facet ranges. The values must be comma separated and go in the increasing order.
+    654321 indicates the infinite days posted-->
+  <add key="DaysPostedFacetRanges" value="1,7,30,654321"/>
+  <!-- The Salary facet ranges. The values must be comma separated and go in the increasing order. -->
+  <add key="SalaryFacetRanges" value="0,20000,40000,60000,80000,100000,150000"/>
+  <!-- Maximum number of facet values to show in each facet type. -->
+  <add key="DisplayFacetValueCount" value="8"/>
+  <!-- Maximum number of facet values to show in each facet type. -->
+  <add key="MaximumFacetValueCount" value="100"/>
+  <!-- Maximum number of items to display for each category when searching for Location (auto complete or auto suggest feature). -->
+  <add key="MaximumLocationAutoCompleteCount" value="4"/>
+  <!-- Maximum number of items to display for each category when searching for Job Title/Keyword (auto complete or auto suggest feature). -->
+  <add key="MaximumJobTitleAutoCompleteCount" value="8"/>
+  <!-- The maximum page size when searching for jobs. -->
+  <add key="MaximumPageSize" value="100"/>
+  <!-- Maximum Days to show in Job Posted # Days Ago -->
+  <add key="MaximumDaysJobPosted" value="30"/>
+  <!-- Number of days for a new post to be considered new (show new label) -->
+  <add key="DaysNewJobPosted" value="7"/>
+  <!-- How many threads can be run simultaneously for the autocomplete (auto-suggest) feature.
+  "0" will be converted to the actual number of CPU cores. -->
+  <add key="AutoCompleteThreadCount" value="0" />
+  <!-- Parameters, such as recipient address, to email errors in Solr, if there are any. -->
+  <add key="SMTPServer" value="10.200.1.205"/>
+  <add key="Environment" value="Neogov.Search.JobSearch"/>
+  <add key="FromEmailAddress" value="donotreply@neogov.com"/>
+  <!-- When DevelopmentToEmailAddress is empty, no emails will be sent in case of errors. -->
+  <add key="DevelopmentToEmailAddress" value="sgjobs@neogov.com"/>
+  <!-- BccTo is not used on 2013-Feb-28. -->
+  <add key="BccTo" value="developers@neogov.com"/>
+  <!-- Set top level domain for iframe document domain to enable passing of variables between iframe pages -->
+  <add key="IFrameDomain" value="neogov.net"/>
+  <add key="EnableGovernmentJobsIframe" value="false"/>
+  <add key="OldGovernmentJobsUrl" value="https://gjobs2.qa.neogov.net/iframeredir.cfm?redir=https%3A%2F%2Fgjobs2.qa.neogov.net%2Fjobseekers%2Fjs_mainmenu.cfm%3FjobId%3D{0}"/>
+  <add key="OldGovernmentJobsApplyUrl" value="https://gjobs2.qa.neogov.net/iframeredir.cfm?redir=https%3A%2F%2Fgjobs2.qa.neogov.net%2Fiframeredir.cfm%3Fredir%3Dhttps%3A%2F%2Fgjobs2.qa.neogov.net%2Fjobseekers%2FdoApply.cfm%3FjobID%3D{0}%26amp%3BappID%3D-1"/>
+  <add key="HiddenJobHitsCounterUrl" value="https://gjobs2.qa.neogov.net/updateHits.cfm?hit_count=yes&amp;jobID={0}"/>
+  <!-- Employers Post Jobs URL-->
+  <add key="EmployersLoginUrl" value="https://gjobs2.dev.neogov.net/sjp/login.cfm" />
+  <add key="EmployersPostJobUrl" value="https://gjobs2.dev.neogov.net/display.cfm?SubCatID=7" />
+  <add key="JobPrintingUrl" value="https://gjobs2.qa.neogov.net/print_bulletin.cfm?JobID={0}&amp;sharedWindow=0" />
+  <add key="JobPrintingCustomizeUrl" value="https://agency.qa.neogov.net/{0}/job_bulletin.cfm?JobID={1}&amp;sharedWindow=0" />
+  <add key="AllowClearAndMigrateJobSeekerApi" value="true"/>
+  
+  <!-- Mongo -->
+  <add key="OnlineMongoDatabaseName" value="OnlineApplication"/>
+
+  <!--Local Mongo-->
+  <add key="OnlineMongoServerName" value="mongodb://localhost"/>
+  
+  <!--DEV Mongo-->
+  <!--<add key="OnlineMongoServerName" value="mongodb://10.200.1.62:17017,10.200.1.68:17017,10.200.1.61:17017/platform?w=2;wtimeoutMS=3000;replicaSet=replica01.dev;slaveOk=true"/>-->
+
+  <!--QA Mongo-->
+  <!--<add key="OnlineMongoServerName" value="mongodb://10.200.1.86:17017,10.200.1.87:17017/platform?w=2;wtimeoutMS=3000;replicaSet=replica01.qa;slaveOk=true" />-->
+
+  <add key="DefinitionsCacheDuration" value="0" />
+  <add key="BingMapsAPIKey" value="AvlmuSSNKxIy5KzOvtqvkN0suhaVrRbAx-vaiWDMpfzyqU21B_620tU0ZKXBE9Rz" />
+
+  <add key="ConfigurationTest" value="something"/>
+
+  <!-- cache time setting in mins for featured jobs -->
+  <add key="FeatureJobsCacheTimeInMins" value="2" />
+  <add key="EnableCaching" value="true" />
+
+  <!-- Google Ads -->
+  <add key="EnableGoogleAdsense" value="true" />
+
+  <!-- Job Desctiption Hiding options at job search results page -->
+  <add key="EnableJobDescriptionHidingOption" value="false" />
+
+  <!-- Google Analytics -->
+  <add key="GoogleAnalyticsWebPropertyId" value="UA-40427986-1" />
+
+  <add key="PasswordResetExpirationPeriodInDays" value="3"/>
+  <!--Pbkdf2HashIterations = 10000; Pbkdf2SaltSize = 30 => GenerateSalt + Hashing takes about 180 ms on Core i7 @ 2.7GHz-->
+  <add key="Pbkdf2SaltSize" value="30" />
+  <add key="apiKey" value="09sd8fg68273kljh2343mnbsdf08123jlkjmasd" />
+  <add key="Pbkdf2HashIterations" value="10000" />
+  <add key="DistributeFromEmailAddress" value="noreply@governmentjobs.com"/>
+  <add key="SecurityNoticeSubject" value="NEOGOV DEV Important Security Notice From GovernmentJobs.com!"/>
+  <add key="ApplicationLoginURL" value="http://gjobs.dev.neogov.net/"/>
+  <add key="SentFromEnvironment" value="NEOGOV DEV"/>
+  <add key="LocalUTCOffset" value="-8"/>
+  <add key="ApplicationReceivedSubject" value="Application received by {0}" />
+  <add key="SQLEncryptPhrase" value="g78gjkgHJG7G5df8yhJG" />
+  <add key="AccountLockPeriodInSeconds" value="1800" />
+  <add key="MaximumLoginAttempts" value="5" />
+
+  <add key="ApplicationLoginUrl" value="http://localhost:27675/" />
+  <add key="Environment" value="Development" />
+  <add key="SentFromEnvironment" value="NEOGOV DEV" />
+  <add key="DistributeFromEmailAddress" value="noreply@governmentjobs.com" />
+  <add key="SecurityNoticeSubject" value="NEOGOV DEV Important Security Notice From GovernmentJobs.com!" />
+
+  <add key="AESKey" value="CTJ8jt7ljqRtFzU6v3WgyQ=="/>
+  <add key="MaximumFileUploadSizeInKB" value="6144"/>
+
+  <!-- Other -->
+  <add key="AgencyImagesURL" value="https://gjobs2.dev.neogov.net/images/AgencyImages/" />
+
+  <add key="EnableSqlSynchronizer" value="true"/>
+  <add key="EnableOnlineProfiler" value="false"/>
+  <add key="ServerAttachmentDestination" value="c:\Attachments\Agency-{0}\JobSeeker-{1}"/>
+
+  <!-- Logging -->
+  <add key="LoggingConfigFile" value="ConfigurationFiles\Logging.config" />
+</appSettings>

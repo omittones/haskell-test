@@ -1,0 +1,191 @@
+﻿<?xml version="1.0"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+    <configSections>
+        <section name="JobSearchSolrUris" type="Neogov.Search.Common.Configuration.UrisSection, Neogov.Search.Common, Version=1.0.0.0, Culture=neutral"/>
+        <sectionGroup name="system.web.webPages.razor" type="System.Web.WebPages.Razor.Configuration.RazorWebSectionGroup, System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35">
+            <section name="host" type="System.Web.WebPages.Razor.Configuration.HostSection, System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false"/>
+            <section name="pages" type="System.Web.WebPages.Razor.Configuration.RazorPagesSection, System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false"/>
+        </sectionGroup>
+        <section name="web.optimization" type="Web.Optimization.Configuration.OptimizationSection"/>
+        <section name="dotless" type="dotless.Core.configuration.DotlessConfigurationSectionHandler, dotless.Core"/>
+        <sectionGroup name="elmah">
+            <section name="security" requirePermission="false" type="Elmah.SecuritySectionHandler, Elmah"/>
+            <section name="errorLog" requirePermission="false" type="Elmah.ErrorLogSectionHandler, Elmah"/>
+            <section name="errorMail" requirePermission="false" type="Elmah.ErrorMailSectionHandler, Elmah"/>
+            <section name="errorFilter" requirePermission="false" type="Elmah.ErrorFilterSectionHandler, Elmah"/>
+        </sectionGroup>
+        <section name="Redis" type="Neogov.Common.Caching.ConfigurationHelpers.RedisConfiguration,Neogov.Common.Caching"/>
+    </configSections>
+    <JobSearchSolrUris configSource="Configuration\JobSearchSolrUris.config" />
+    <appSettings configSource="Configuration\appSettings.config" />
+    <connectionStrings configSource="Configuration\connectionStrings.config" />
+    <system.web.webPages.razor>
+        <host factoryType="System.Web.Mvc.MvcWebRazorHostFactory, System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
+        <pages pageBaseType="System.Web.Mvc.WebViewPage">
+            <namespaces>
+                <add namespace="System.Web.Mvc"/>
+                <add namespace="System.Web.Mvc.Ajax"/>
+                <add namespace="System.Web.Mvc.Html"/>
+                <add namespace="System.Web.Routing"/>
+            </namespaces>
+        </pages>
+    </system.web.webPages.razor>
+    <!--
+    For a description of web.config changes for .NET 4.5 see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.5" />
+      </system.Web>
+  -->
+    <system.web>
+        <sessionState timeout="10" />
+        <authentication mode="Forms">
+            <forms loginUrl="~/Account/LogOn" timeout="2880"
+                   cookieless="UseCookies" />
+        </authentication>
+        <globalization uiCulture="en-US" culture="en-US"/>
+        <customErrors mode="Off"/>
+        <httpHandlers>
+            <add verb="POST,GET,HEAD" path="elmah.axd" preCondition="integratedMode" type="Elmah.ErrorLogPageFactory, Elmah"/>
+            <add path="*" verb="*" type="System.Web.HttpNotFoundHandler"/>
+            <add path="*.less" verb="GET" type="dotless.Core.LessCssHttpHandler, dotless.Core" validate="false"/>
+        </httpHandlers>
+        <httpModules>
+            <add name="ErrorLog" type="Elmah.ErrorLogModule, Elmah"/>
+        </httpModules>
+        <httpRuntime requestPathInvalidCharacters="&lt;,&gt;,*,%,:,\" />
+        <!--
+      Enabling request validation in view pages would cause validation to occur
+      after the input has already been processed by the controller. By default
+      MVC performs request validation before a controller processes the input.
+      To change this behavior apply the ValidateInputAttribute to a
+      controller or action.
+    -->
+        <pages validateRequest="false" pageParserFilterType="System.Web.Mvc.ViewTypeParserFilter, System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" pageBaseType="System.Web.Mvc.ViewPage, System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" userControlBaseType="System.Web.Mvc.ViewUserControl, System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" controlRenderingCompatibilityVersion="4.0">
+            <namespaces>
+                <add namespace="System.Web.Helpers"/>
+                <add namespace="System.Web.Mvc"/>
+                <add namespace="System.Web.Mvc.Ajax"/>
+                <add namespace="System.Web.Mvc.Html"/>
+                <add namespace="System.Web.Routing"/>
+                <add namespace="System.Web.WebPages"/>
+            </namespaces>
+            <controls>
+                <add assembly="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" namespace="System.Web.Mvc" tagPrefix="mvc"/>
+            </controls>
+        </pages>
+        <compilation debug="true" targetFramework="4.5">
+            <assemblies>
+                <add assembly="System.Web.Abstractions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"/>
+                <add assembly="System.Web.Routing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"/>
+                <add assembly="System.Data.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+                <add assembly="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"/>
+            </assemblies>
+        </compilation>
+    </system.web>
+    <system.webServer>
+        <httpErrors errorMode="Custom" existingResponse="Replace" defaultResponseMode="ExecuteURL">
+            <remove statusCode="404" />
+            <error statusCode="404" path="/Error/NotFound" responseMode="ExecuteURL" />
+            <remove statusCode="401" />
+            <error statusCode="401" path="/Error/Index?statusCode=401" responseMode="ExecuteURL" />
+            <remove statusCode="403" />
+            <error statusCode="403" path="/Error/Index?statusCode=403" responseMode="ExecuteURL" />
+            <remove statusCode="405" />
+            <error statusCode="405" path="/Error/Index?statusCode=405" responseMode="ExecuteURL" />
+            <remove statusCode="406" />
+            <error statusCode="406" path="/Error/Index?statusCode=406" responseMode="ExecuteURL" />
+            <remove statusCode="412" />
+            <error statusCode="412" path="/Error/Index?statusCode=412" responseMode="ExecuteURL" />
+            <remove statusCode="500" />
+            <error statusCode="500" path="/Error/Index?statusCode=500" responseMode="ExecuteURL" />
+            <remove statusCode="501" />
+            <error statusCode="501" path="/Error/Index?statusCode=501" responseMode="ExecuteURL" />
+            <remove statusCode="503" />
+            <error statusCode="503" path="/Error/Index?statusCode=503" responseMode="ExecuteURL" />
+        </httpErrors>
+        <validation validateIntegratedModeConfiguration="false"/>
+        <modules runAllManagedModulesForAllRequests="true">
+            <add name="ErrorMail" type="Elmah.ErrorMailModule, Elmah" />
+            <add name="ErrorLog" type="Elmah.ErrorLogModule, Elmah" />
+            <add name="ErrorFilter" type="Elmah.ErrorFilterModule, Elmah" />
+        </modules>
+        <handlers>
+            <add name="Elmah" verb="POST,GET,HEAD" path="elmah.axd" preCondition="integratedMode" type="Elmah.ErrorLogPageFactory, Elmah" />
+            <remove name="ExtensionlessUrlHandler-ISAPI-4.0_32bit"/>
+            <remove name="ExtensionlessUrlHandler-ISAPI-4.0_64bit"/>
+            <remove name="ExtensionlessUrlHandler-Integrated-4.0"/>
+            <remove name="AboMapperCustom-541547716"/>
+            <add name="ExtensionlessUrlHandler-ISAPI-4.0_32bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness32" responseBufferLimit="0"/>
+            <add name="ExtensionlessUrlHandler-ISAPI-4.0_64bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework64\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness64" responseBufferLimit="0"/>
+            <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0"/>
+            <add name="dotless" path="*.less" verb="GET" type="dotless.Core.LessCssHttpHandler,dotless.Core" resourceType="File" preCondition=""/>
+        </handlers>
+        <staticContent>
+            <remove fileExtension=".woff"/>
+            <mimeMap fileExtension=".woff" mimeType="application/x-font-woff"/>
+        </staticContent>
+    </system.webServer>
+    <web.optimization>
+        <bundles>
+            <bundle virtualPath="~/Content/sample" transform="System.Web.Optimization.JsMinify, System.Web.Optimization">
+                <content>
+                    <!-- Add some single files -->
+                    <!-- <add path="~/Scripts/validation.js" /> -->
+                    <!-- <add path="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js" /> -->
+                    <!-- Add a directory (and its subdirectories) -->
+                    <!-- <add path="~/Scripts/Plugins" searchPattern="*.js" searchSubdirectories="true" /> -->
+                </content>
+                <!--
+        If you want to apply multiple transformations, 
+        you should remove the "transform" attribute from the bundle. 
+        -->
+                <!--
+        <transformations>
+          <add type="Web.Optimization.Bundles.CoffeeScript.CoffeeScriptTransform, Web.Optimization.Bundles.CoffeeScript" />
+          <add type="System.Web.Optimization.JsMinify, System.Web.Optimization" />
+        </transformations>
+        -->
+            </bundle>
+        </bundles>
+    </web.optimization>
+    <runtime>
+        <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+            <dependentAssembly>
+                <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" culture="neutral"/>
+                <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0"/>
+            </dependentAssembly>
+            <dependentAssembly>
+                <assemblyIdentity name="WebGrease" publicKeyToken="31bf3856ad364e35" culture="neutral"/>
+                <bindingRedirect oldVersion="0.0.0.0-1.3.0.0" newVersion="1.3.0.0"/>
+            </dependentAssembly>
+            <dependentAssembly>
+                <assemblyIdentity name="System.Net.Http" publicKeyToken="b03f5f7f11d50a3a" culture="neutral"/>
+                <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0"/>
+            </dependentAssembly>
+            <dependentAssembly>
+                <assemblyIdentity name="Autofac" publicKeyToken="17863af14b0044da" culture="neutral"/>
+                <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0"/>
+            </dependentAssembly>
+            <dependentAssembly>
+                <assemblyIdentity name="Autofac.Integration.Mvc" publicKeyToken="17863af14b0044da" culture="neutral"/>
+                <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0"/>
+            </dependentAssembly>
+        </assemblyBinding>
+    </runtime>
+    <dotless minifyCss="false" cache="false" web="false"/>
+    <elmah>
+        <errorLog type="Elmah.XmlFileErrorLog, Elmah" logPath="C:\Logs\Products\GJobs"/>
+    </elmah>
+
+    <Redis enabled="false">
+        <RedisServers>
+            <add address="localhost" port="6379" />
+        </RedisServers>
+    </Redis>
+</configuration>

@@ -1,0 +1,13 @@
+﻿<JobSearchSolrUris>
+  <!-- These are SOLR uris for job post search.
+  The total sum of "count" for all uris must not be less than 2. -->
+  <uris>
+    <add uri="http://localhost:8080/solr/jobsearch" count="2"></add>
+    
+    <!--Dev Solr-->
+    <!--<add uri="http://solr01.dev.neogov.net:8080/solr/jobsearch" count="2"></add>-->
+    
+    <!--QA Solr-->
+    <!--<add uri="http://solr01.qa.neogov.net:8080/solr/jobsearch" count="2"></add>-->
+  </uris>
+</JobSearchSolrUris>
