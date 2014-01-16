@@ -134,19 +134,52 @@ instance (XMLSerializable a, XMLSerializable b) => XMLSerializable (a,b) where
     serializeToXML (arg1,arg2) = (serializeToXML arg1) ++ (serializeToXML arg2)
     deserializeFromXML xml = ((deserializeFromXML xml) , (deserializeFromXML xml))
 
+--implementing YesNo behavior for various types
+class YesNo a where
+    is :: a -> Bool
+
+--basic stuff
+instance YesNo Int where
+    is 0 = False
+    is _ = True
+
+instance YesNo [a] where
+    is [] = False
+    is _ = True
+
+--id is a standard identity function (id a = a)
+instance YesNo Bool where
+    is = id
+
+--when implementing YesNo for Maybe, use False when Nothing, otherwise use value contained in Just
+instance (YesNo a) => YesNo (Maybe a) where
+    is Nothing = False
+    is (Just arg) = is arg
+
+--if a type T is instance of Functor typeclass, it has to implement fmap function that takes in (a -> b) and translates T a to T b
+--these are test function to show how it does that
+addOne :: Int -> Int
+addOne = (+ 1)
+addOneAndShow :: Int -> String
+addOneAndShow = show . addOne
+
 main :: IO()
 main = do
 
     print $ serializeToXML $ Male "tino" "juricic"
     print $ serializeToXML ((deserializeFromXML "lalalal") :: Person)
 
+    print $ is (0 :: Int)
+    print $ is [1]
+    print $ is (Nothing :: Maybe Int)
+
+    --use fmap (map that can work on types implementing Functor typeclass)
+    --Functor typeclass defines a function in which Type a goes into Type b when we have function (a -> b), or to put it like this: given contructor f, fmap is (a -> b) -> f a -> f b
+    --list implements a functor
+    print $ [1,2,3]
+    print $ fmap addOneAndShow [1,2,3]
+
     return ()
-
-
-
-
-
-
 
 
 
