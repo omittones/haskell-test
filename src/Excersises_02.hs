@@ -5,7 +5,7 @@ import qualified Data.Map as Map
 import Data.Maybe
 
 --datatype in record syntax
-data Person = Male { firstName :: String, lastName :: String } | Female { firstName :: String, lastName :: String }
+data Person = Male { firstName :: String, lastName :: String } | Female { firstName :: String, lastName :: String } | Asexual { designation :: String } deriving (Show)
 
 --function that takes in a female, uses person@ for the entire pattern (Female _ _ )
 --function that takes in a male uses standard datatype sytnax, also works as it should
@@ -163,6 +163,16 @@ addOne = (+ 1)
 addOneAndShow :: Int -> String
 addOneAndShow = show . addOne
 
+--we can use p { arg = ((arg p) + 1) } to copy the object with changes to it
+--when using flipNames with incompatible form, we won't get compile time error, but we WILL get runtime error
+--so we have to override the behaviour in case of constructor with different signature
+flipNames :: Person -> Person
+flipNames p@(Asexual {}) = p
+flipNames p = p { firstName = lastName p, lastName = firstName p }
+
+
+--print $ flipNames $ Asexual "amiffskatenwaf"
+
 main :: IO()
 main = do
 
@@ -179,10 +189,8 @@ main = do
     print $ [1,2,3]
     print $ fmap addOneAndShow [1,2,3]
 
+    print $ flipNames $ Male "john" "smith"
+    print $ flipNames $ Female "jane" "watson"
+    print $ flipNames $ Asexual "amiffskatenwaf"
+
     return ()
-
-
-
-
-
-
