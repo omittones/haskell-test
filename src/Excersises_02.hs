@@ -171,7 +171,7 @@ flipNames p@(Asexual {}) = p
 flipNames p = p { firstName = lastName p, lastName = firstName p }
 
 
---print $ flipNames $ Asexual "amiffskatenwaf"
+
 
 main :: IO()
 main = do
