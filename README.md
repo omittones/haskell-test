@@ -1,2 +1,2 @@
-haskell.test
+haskell-test
 ============
